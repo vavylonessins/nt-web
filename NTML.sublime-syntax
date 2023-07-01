@@ -1,0 +1,159 @@
+%YAML 1.2
+---
+file_extensions:
+  - ntml
+scope: source.ntml
+contexts:
+
+  main:
+
+    - match: '"'
+      scope: punctuation.definition.string.begin.ntml
+      push: double_quoted_string
+
+    - match: '\/\*[^\*\/]*\*\/'
+      scope: comment.outline.ntml
+
+    - match: '\b(table|tab|f(orm)?|t(r|d)|body|b(old)?|i(talic)?|u(nderline)?|s(trokeout)?|bl(ock)?|t(ext)?|inp(ut)?|ht?[1-4]|ln|link|img|image|code|cd)\b\s*((?=\()|(?=\{))'
+      scope: keyword.control.ntml
+
+    - match: \b(ntml|style|script|favicon)\b
+      scope: constant.language.ntml
+
+    - match: \[(nl|sp|c(opy)?|\(|\[|\{|\})\]
+      scope: constant.language.ntml
+
+    - match: \bdoctype\s*(?=\w)\b|\bimport\b\s*(?=\()|title\s*(?=\")|inc(lude)?\s*(?=\")
+      scope: keyword.control.ntml
+
+  expr_unmutable:
+
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.ntml
+
+    - match: '"'
+      scope: punctuation.definition.string.begin.ntml
+      push: double_quoted_string
+
+    - match: '\b(true|false|null)\b'
+      scope: constant.language.ntml
+
+    - match: '\,|\)'
+      scope: punctuation.definition.tag.ntml
+      pop: true
+
+
+  double_quoted_string:
+
+    - meta_scope: string.quoted.double.ntml
+
+    - match: '\\.'
+      scope: constant.character.escape.ntml
+
+    - match: '"'
+      scope: punctuation.definition.string.end.ntml
+      pop: true
+
+
+  single_quoted_string:
+
+    - meta_scope: string.quoted.double.ntml
+
+    - match: '\\.'
+      scope: constant.character.escape.ntml
+
+    - match: '\'''
+      scope: punctuation.definition.string.end.ntml
+      pop: true
+
+
+  tag_kw:
+
+    - match: '\s'
+
+    - match: '\('
+      scope: punctuation.definition.tag.ntml
+      set: tag_args_n
+
+    - match: '\{'
+      scope: punctuation.definition.tag.ntml
+      set: tag_body
+
+  tag_kw_body:
+
+    - match: '\s'
+
+    - match: '\('
+      scope: punctuation.definition.tag.ntml
+      set: tag_args_n
+
+    - match: '\{'
+      scope: punctuation.definition.tag.ntml
+      set: tag_body_body
+
+
+  tag_args_n:
+
+    - match: '\b([A-Za-z_]+)\b'
+      scope: variable.parameter.ntml
+      push: tag_args_e
+
+    - match: '\)'
+      scope: punctuation.definition.tag.ntml
+      set: tag_body
+
+
+  tag_args_e:
+
+    - match: '='
+      scope: keyword.operator.ntml
+      set: expr_unmutable
+
+
+  tag_body:
+    - meta_scope: meta.generic-content.ntml
+
+    - match: '\/\*'
+      scope: comment.inline.ntml
+      push: comment
+
+    - match: '\&.\;'
+      scope: constant.definition.escape.ntml
+
+    - match: '\b(h[1-6]|p|footer|header|div|span|time|title|b|i|u|s|code)\b'
+      scope: keyword.control.ntml
+      push: tag_kw
+
+    - match: '\{'
+      scope: punctuation.definition.tag.ntml
+
+    - match: '\}'
+      scope: punctuation.definition.tag.ntml
+      set: tag_body
+
+  tag_body_body:
+    - meta_scope: meta.generic-content.ntml
+
+    - match: '\/\*'
+      scope: comment.inline.ntml
+      push: comment
+
+    - match: '\&.\;'
+      scope: constant.definition.escape.ntml
+
+    - match: '\b(h[1-6]|p|footer|header|div|span|time|title|b|i|u|s|code)\b'
+      scope: keyword.control.ntml
+      push: tag_kw
+
+    - match: '\{'
+      scope: punctuation.definition.tag.ntml
+
+    - match: '\}'
+      scope: punctuation.definition.tag.ntml
+      set: main
+
+  comment:
+    - meta_scope: comment.inline.ntml
+
+    - match: '\*\/'
+      pop: true
