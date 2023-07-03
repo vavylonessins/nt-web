@@ -1,6 +1,6 @@
 from ntml.ntml_parser import *
 from typing import *
-import os
+import sys
 
 
 def tran_props(props: dict):
@@ -51,7 +51,11 @@ meals: dict = {
     "form": "form",
     "f": "form",
     "tr": "tr",
-    "td": "td"
+    "td": "td",
+    "script": "script",
+    "scr": "script",
+    "btn": "button",
+    "button": "button"
 }
 
 
@@ -129,7 +133,7 @@ class Title:
 
 class SimpleTagOpen:
     kind: str
-    props: dict
+    props: str
 
     def __init__(self, kind: str, props: Optional[dict] = None):
         self.kind = kind
@@ -171,14 +175,16 @@ class Tran:
         self.autospace = [True]
 
     def to_html(self):
-        return self.doctype.to_html()+ \
-            "\n<html>\n    <head>\n        "+"\n        ".join(tuple(i.to_html() for i in self.data["meta"]))+\
-            "        "+"        ".join(tuple(i.to_html() for i in self.imports))+"    </head>\n\n"+self.cache.replace("\n", "\n    ").strip()+"\n</html>"
+        return self.doctype.to_html() + \
+            "\n<html>\n    <head>\n        "+"\n        ".join(tuple(i.to_html() for i in self.data["meta"])) + \
+            "        " + "        ".join(tuple(i.to_html() for i in self.imports)) + "    </head>\n\n" +\
+            self.cache.replace("\n", "\n    ").strip()+"\n</html>"
     
     def walk_tree(self):
         self.cache = self.walk_subtree(self.tree)
     
-    def walk_subtree(self, node: Node|list = []):
+    def walk_subtree(self, node: Optional[Node | list] = None):
+        node = node or []
         # print(node)
         if type(node) == list:
             ret = ""
@@ -209,26 +215,31 @@ class Tran:
                 tprops = data["props"]
                 tbody = data["body"]
 
-                if tkind in "img image".split():
-                    if tbody or not tprops:
-                        print(f"error: `{tkind}` should not have body")
-                        os._exit(0)
-                else:
-                    if not tbody:
-                        print(f"error: `{tkind}` needs a body")
+                if tkind != "script":
+                    if tkind in "img image".split():
+                        if tbody is not None or tprops is None:
+                            print(f"error: `{tkind}` should not have body")
+                            sys.exit()
+                    else:
+                        if tbody is None:
+                            print(f"error at {node.pos}: `{tkind}` needs a body")
+                            sys.exit()
 
-                if tkind in "code cd".split():
+                if tkind in "code cd script scr".split():
                     self.autospace.append(False)
                 else:
                     self.autospace.append(True)
-                if tkind in "image img".split():
-                    r = SimpleTagOpen("image", tprops).to_html()
+
+                if not tbody:
+                    r = SimpleTagOpen(meals[tkind], tprops).to_html()
                 elif tkind in "table tab".split():
-                    r = SimpleTagOpen("table", {}).to_html()+SimpleTagOpen("tbody", tprops).to_html()+\
-                        self.walk_subtree(tbody).replace("\n", "\n    ")+SimpleTagClose("tbody").to_html()+\
+                    r = SimpleTagOpen("table", {}).to_html()+SimpleTagOpen("tbody", tprops).to_html() + \
+                        self.walk_subtree(tbody).strip().replace("\n", "\n    ")+SimpleTagClose("tbody").to_html() + \
                         SimpleTagClose("table").to_html()
                 else:
-                    r = SimpleTagOpen(meals[tkind], tprops).to_html()+self.walk_subtree(tbody).replace("\n", "\n    ")+SimpleTagClose(meals[tkind]).to_html()
+                    r = SimpleTagOpen(meals[tkind], tprops).to_html() + \
+                        self.walk_subtree(tbody).strip().replace("\n", "\n    ")+SimpleTagClose(meals[tkind]).to_html()
+                    # print(r)
                 self.autospace.pop()
                 return r
             
@@ -242,10 +253,10 @@ class Tran:
 
             r = str(node) if type(node) != str else node
             if self.autospace[-1]:
-                r = ("" if r in "([{$*/&|^-+=" else " ")+r+(" " if r in ",.:;%!)]}" else "")
+                r = ("" if r in "([{$*/&|^-+=,.:;%?!)]}\n" else " ")+r.strip()+(" " if r in ",.:;%?!)]}" else "")
                 r = r.replace(" , ", ",").replace(" . ", ".").replace(" : ", ":").\
                     replace(" ; ", ";").replace(" % ", "%").replace(" ! ", "!").replace(" ) ", ")").\
-                    replace(" ] ", "]").replace(" } ", "}")
+                    replace(" ] ", "]").replace(" } ", "}").replace(" !", "!")
             return r
 
         return ""
