@@ -147,5 +147,6 @@ except parglare.exceptions.ParseError as pe:
 except SystemExit:
     sys.exit()
 except BaseException as be:
-    tb.print_exception(be)
+    print(be)
+    # tb.print_exception(be)
     # print(be.__class__.__name__+":", str(be))
