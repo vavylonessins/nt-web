@@ -1,0 +1,1 @@
+from ntml.ntmlc import compile
