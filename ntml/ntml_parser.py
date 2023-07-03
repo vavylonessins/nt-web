@@ -57,15 +57,17 @@ class Node:
     kind: str
     data: dict
     pos: Any
+    end_pos: Any
 
-    def __init__(self, typ: str, data: dict = None, pos: int = None):
+    def __init__(self, typ: str, data: dict = None, pos: int = None, end_pos: int = None):
         self.kind: str = str(typ)
         self.data: dict = data or {}
         self.pos = pos
+        self.end_pos = end_pos
 
     def __str__(self):
-        return """Node <%s at %s>
-    %s""" % (self.kind, self.pos,  pformat(self.data))
+        return """Node <%s at %s:%s>
+    %s""" % (self.kind, self.pos, self.end_pos, pformat(self.data))
     
     __repr__ = __str__
 
@@ -120,20 +122,33 @@ def unescape(raw):
         return f"[{data}]"
 
 
+def gnp(start_pos):
+    ntml = code
+    ls = ntml[:start_pos].split("\n")
+    nl = len(ls)
+    ns = len(ls[-1])
+    return nl, ns
+
+
 actions = {
-    "Sdoctype": lambda _, n: Node("doctype", {"version": eval(n[2]) if n[2] else VERSION}, _.start_position),
+    "Sdoctype": lambda _, n: Node("doctype", {"version": eval(n[2]) if n[2] else VERSION}, gnp(_.start_position), gnp(_.end_position)),
     "Simport": lambda _, n: Node("import", {"semantic": n[2], "type": eval(n[4]),
-                                            "path": eval(n[6])}, _.start_position),
-    "Stitle": lambda _, n: Node("title", {"text": n[1]}, _.start_position),
-    "Stag": lambda _, n: Node("tag", {"type": n[0], "props": n[1], "body": n[2]}, _.start_position),
+                                            "path": eval(n[6])}, gnp(_.start_position), gnp(_.end_position)),
+    "Stitle": lambda _, n: Node("title", {"text": n[1]}, gnp(_.start_position), gnp(_.end_position)),
+    "Stag": lambda _, n: Node("tag", {"type": n[0], "props": n[1], "body": n[2]}, gnp(_.start_position), gnp(_.end_position)),
     "Sprops": lambda _, n: props_to_dict(n),
     "Sbody": lambda _, n: n[1],
     "Tint": lambda _, n: '"' + n + '"',
     "Tverfloat": lambda _, n: '"' + n + '"',
     "Tfloat": lambda _, n: '"' + n + '"',
-    "Tescape": lambda _, n: Node("html", {"value": unescape(n)}, _.start_position),
-    "Tcomment": lambda _, n: Node("comment", {"text": n[2:][:-2]}, _.start_position)
+    "Tescape": lambda _, n: Node("html", {"value": unescape(n)}, gnp(_.start_position), gnp(_.end_position)),
+    "Tcomment": lambda _, n: Node("comment", {"text": n[2:][:-2]}, gnp(_.start_position), gnp(_.end_position))
 }
 
 
 ntml_parser = Parser(grammar=Grammar.from_string(ml_grm), actions=actions)
+
+def parse(ntml: str) -> Node:
+    global code
+    code = ntml
+    return ntml_parser.parse(ntml)

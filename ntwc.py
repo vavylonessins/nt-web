@@ -13,7 +13,7 @@ import traceback as tb
 import ntml
 import shutil
 import re
-from parglare.parser import ParseError
+import parglare
 
 
 path: str = sys.argv[-1].replace("\\s", " ")
@@ -32,8 +32,35 @@ def restyle(data: str) -> str:
     Makes parse error messages prettier
 
     """
+    data = data.replace("Tcomment", "comment declaration")
+    data = data.replace("Tdoctype", "keyword \"doctype\"")
+    data = data.replace("Tntml", "keyword \"ntml\"")
+    data = data.replace("Timport", "keyword \"import\"")
+    data = data.replace("Ttitle", "keyword \"title\"")
+    data = data.replace("Ttagname", "tag name")
+    data = data.replace("Tverfloat", "version declaration")
+    data = data.replace("Tescape", "escape sequence")
+    data = data.replace("Tany", "any other content")
     data = data.replace("Tname", "symbol name")
+    data = data.replace("Tname", "symbol name")
+    data = data.replace("Tname", "symbol name")
+    data = data.replace("Tname", "symbol name")
+    data = data.replace("Tfloat", "float")
+    data = data.replace("Tint", "integer")
+    data = data.replace("Tstr", "string")
+    data = data.replace("Sdoctype", "doctype declaration")
+    data = data.replace("Sbody", "tag body")
+    data = data.replace("Sexpr", "expression")
+    data = data.replace("Sassign", "assignment")
+    data = data.replace("Sprops", "tag properties")
+    data = data.replace("Stag", "tag declaration")
+    data = data.replace("Stitle", "title declaration")
+    data = data.replace("Simport", "import declaration")
     data = data.split(" but found ", 1)[0]
+    if " or " in data:
+        rdata = data.split(" or ")
+        data = ", ".join(rdata[:-1])
+        data += " or "+rdata[-1]
     return data
 
 
@@ -54,7 +81,8 @@ def ntml_recursive_compile_all(srcdir: str | os.PathLike,
 
     global last_opened
 
-    print(srcdir)
+    if srcdir.endswith("/dir/"):
+        print(srcdir)
 
     try:
         os.mkdir(dstdir)
@@ -66,20 +94,21 @@ def ntml_recursive_compile_all(srcdir: str | os.PathLike,
         if srcdir + f in compiled:
             continue
         if os.path.isdir(srcdir + f):
-            print("    " * (level - 1) + f + "/")
+            print("    " * level + f + "/")
             try:
                 os.mkdir(dstdir+f)
             except FileExistsError:
                 pass
             ntml_recursive_compile_all(srcdir + f + "/", dstdir + f + "/", level+1)
         else:
-            print("    " * (level - 1) + f, end="")
+            print("    " * level + f, end="")
+            last_opened = srcdir + f
             if f.endswith("ntml"):
                 print(" NTML")
                 opath = (dstdir+f).replace(".ntml", ".html")
                 with open(srcdir+f, "rt") as fp:
                     with open(opath, "wt") as op:
-                        op.write(ntml.compile(fp.read()))
+                        op.write(ntml.compile(fp.read(), srcdir + f))
             else:
                 print()
                 src = srcdir+f
@@ -95,10 +124,11 @@ try:
             with open(path.replace(".ntml", ".html"), "wt") as o:
                 o.write(ntml.compile(i.read()))
         sys.exit()
+    print()
     print(path.removesuffix("/") + "/")
     ntml_recursive_compile_all(path + ("/src/" if "--index-file" not in sys.argv else "/"),
                                path + ("/dst/" if "--index-file" not in sys.argv else "/"))
-except ParseError as pe:
+except parglare.exceptions.ParseError as pe:
     print()
     exc_n = pe.__class__.__name__
     exc_d = str(pe)
@@ -109,11 +139,13 @@ except ParseError as pe:
     print("Error while parsing file %s," % last_opened)
     print("At line %d, column %d:" % (nl, ns))
     with open(last_opened, "rt") as f:
-        print("│   "+f.read().split("\n")[nl-1].strip())
-    print("│   "+" "*(ns - 1)+"▲")
-    print("└───"+"─"*(ns - 1)+"┘")
+        print("│   " + f.read().split("\n")[nl - 1].strip())
+    print("│   " + " " * ns + "▲")
+    print("└───" + "─" * ns + "┘")
     print(restyle(dt.split("=> ", 1)[1]))
     print()
+except SystemExit:
+    sys.exit()
 except BaseException as be:
     tb.print_exception(be)
     # print(be.__class__.__name__+":", str(be))

@@ -161,7 +161,8 @@ class Tran:
     doctype: Doctype
     autospace: list[bool]
 
-    def __init__(self, tree, initdt: Optional[dict] = None) -> None:
+    def __init__(self, tree, fp: str = "", initdt: Optional[dict] = None) -> None:
+        self.fp = fp
         self.tree: list[Node | list | Any] = tree
         self.adress = 0
         self.imports = []
@@ -218,11 +219,31 @@ class Tran:
                 if tkind != "script":
                     if tkind in "img image".split():
                         if tbody is not None or tprops is None:
-                            print(f"error: `{tkind}` should not have body")
+                            el, es = node.pos
+                            nl, ns = node.end_pos
+                            print("\nError while parsing file %s," % self.fp)
+                            print("At line %d, column %d:" % (nl, ns))
+                            with open(self.fp, "rt") as f:
+                                print("│   " + (ln := f.read().split("\n")[nl - 1]).strip())
+                            ns -= len(ln) - len(ln.strip())
+                            print("│   " + " " * (es - len(ln) - len(ln.strip())) +
+                                  "~" * (ns - es + len(ln) - len(ln.strip()) - 1) + "▲")
+                            print("└───" + "─" * (ns - 1) + "┘")
+                            print(f"{tkind} should not have a body\n")
                             sys.exit()
                     else:
                         if tbody is None:
-                            print(f"error at {node.pos}: `{tkind}` needs a body")
+                            el, es = node.pos
+                            nl, ns = node.end_pos
+                            print("\nError while parsing file %s," % self.fp)
+                            print("At line %d, column %d:" % (nl, ns))
+                            with open(self.fp, "rt") as f:
+                                print("│   " + (ln := f.read().split("\n")[nl - 1]).strip())
+                            ns -= len(ln) - len(ln.strip())
+                            print("│   " + " " * (es - len(ln) - len(ln.strip())) +
+                                  "~" * (ns - es + len(ln) - len(ln.strip()) - 1) + "▲")
+                            print("└───" + "─" * (ns - 1) + "┘")
+                            print(f"{tkind} needs a body\n")
                             sys.exit()
 
                 if tkind in "code cd script scr".split():
