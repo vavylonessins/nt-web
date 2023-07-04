@@ -1,0 +1,13 @@
+doctype ntml 0.1
+
+title "Ок ладно"
+
+
+body {
+	h1{ok}
+	f(action="https://google.com/search"){
+		input(placeholder="введите запрос",name="q"){/*body*/}
+		input(type="submit",value="search"){/*body*/}
+	}
+	input(type="button",value="alert",onclick="alert('ok')"){/*body*/}
+}
