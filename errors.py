@@ -1,4 +1,10 @@
-from colorama import Fore as fg, Back as bg, Style as st, init
+"""
+error.py
+
+implements errors formatted print
+"""
+
+from colorama import Fore as Fg, Style as St, init
 
 
 init()
@@ -48,18 +54,24 @@ def restyle(data: str) -> str:
 
 
 def print_parse_error(pos, file, dt):
-    D = 2
+    """
+    prints parsing errors
+    @param pos:
+    @param file:
+    @param dt:
+    @return:
+    """
     print()
     nl, ns = pos
     print("Error while parsing file %s," % file)
-    print("At line "+st.BRIGHT+str(nl)+st.NORMAL+", column "+st.BRIGHT+str(ns)+st.NORMAL+":")
+    print("At line " + St.BRIGHT + str(nl) + St.NORMAL + ", column " + St.BRIGHT + str(ns) + St.NORMAL + ":")
     with open(file, "rt") as f:
         fd = f.read()
-        ln = fg.YELLOW+"│   "+fg.RESET + fd.split("\n")[nl - 1].strip()
+        ln = Fg.YELLOW + "│   " + Fg.RESET + fd.split("\n")[nl - 1].strip()
         sd = len(fd.split("\n")[nl - 1]) - len(fd.split("\n")[nl - 1].strip()) + 2
-        ln = ln[:ns+sd]+fg.RED+ln[ns+sd]+fg.RESET+ln[ns+sd+1:]
+        ln = ln[:ns+sd] + Fg.RED + ln[ns + sd] + Fg.RESET + ln[ns + sd + 1:]
         print(ln)
-    print(fg.YELLOW+"│   "+fg.RESET + " " * (ns - sd + 2) + fg.YELLOW+"▲")
-    print("╰───" + "─" * (ns - sd + 2) + "╯"+fg.RESET)
+    print(Fg.YELLOW + "│   " + Fg.RESET + " " * (ns - sd + 2) + Fg.YELLOW + "▲")
+    print("╰───" + "─" * (ns - sd + 2) + "╯" + Fg.RESET)
     print(restyle(dt.split("=> ", 1)[1]))
     print()

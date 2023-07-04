@@ -1,8 +1,19 @@
+"""
+
+ntml/ntml_parser.py
+
+Reliable to parsing NTML code
+
+"""
+
+
 from typing import *
 from parglare import Grammar, Parser
 from pprint import pformat
 from ntml.const import *
 
+
+code: str
 
 ml_grm = r"""
 
@@ -55,12 +66,15 @@ Tany: /(\+|\;|\/|\/|\*|\`|\’|\:|\d|\?|\&|\~|\'|\"SUPPRESS_NEWLINW
 
 
 class Node:
+    """
+    class for storing parser node data
+    """
     kind: str
     data: dict
     pos: Any
     end_pos: Any
 
-    def __init__(self, typ: str, data: dict = None, pos: int = None, end_pos: int = None):
+    def __init__(self, typ: str, data: dict = None, pos: tuple[int, int] = None, end_pos: tuple[int, int] = None):
         self.kind: str = str(typ)
         self.data: dict = data or {}
         self.pos = pos
@@ -74,6 +88,12 @@ class Node:
 
 
 def flat(a: list, tp: type = list):
+    """
+    converts any complex array to simple 1D array
+    @param a:
+    @param tp:
+    @return:
+    """
     i: list | Any
     r: list
 
@@ -87,6 +107,11 @@ def flat(a: list, tp: type = list):
 
 
 def props_to_dict(n: Optional[list[str | dict]]):
+    """
+    Converts tag props
+    @param n:
+    @return:
+    """
     if not n:
         return {}
 
@@ -112,6 +137,11 @@ def props_to_dict(n: Optional[list[str | dict]]):
 
 
 def unescape(raw):
+    """
+    Converts escape sequences
+    @param raw:
+    @return:
+    """
     data = raw[1:][:-1]
 
     if raw == "[[]":
@@ -134,6 +164,11 @@ def unescape(raw):
 
 
 def gnp(start_pos):
+    """
+    converts symbol position to line:column position
+    @param start_pos:
+    @return:
+    """
     ntml = code
     ls = ntml[:start_pos].split("\n")
     nl = len(ls)
@@ -142,11 +177,13 @@ def gnp(start_pos):
 
 
 actions = {
-    "Sdoctype": lambda _, n: Node("doctype", {"version": eval(n[2]) if n[2] else VERSION}, gnp(_.start_position), gnp(_.end_position)),
+    "Sdoctype": lambda _, n: Node("doctype", {"version": eval(n[2]) if n[2] else VERSION}, gnp(_.start_position),
+                                  gnp(_.end_position)),
     "Simport": lambda _, n: Node("import", {"semantic": n[2], "type": eval(n[4]),
                                             "path": eval(n[6])}, gnp(_.start_position), gnp(_.end_position)),
     "Stitle": lambda _, n: Node("title", {"text": n[1]}, gnp(_.start_position), gnp(_.end_position)),
-    "Stag": lambda _, n: Node("tag", {"type": n[0], "props": n[1], "body": n[2]}, gnp(_.start_position), gnp(_.end_position)),
+    "Stag": lambda _, n: Node("tag", {"type": n[0], "props": n[1], "body": n[2]}, gnp(_.start_position),
+                              gnp(_.end_position)),
     "Sprops": lambda _, n: props_to_dict(n),
     "Sbody": lambda _, n: n[1],
     "Tint": lambda _, n: '"' + n + '"',
@@ -159,7 +196,13 @@ actions = {
 
 ntml_parser = Parser(grammar=Grammar.from_string(ml_grm), actions=actions)
 
+
 def parse(ntml: str) -> Node:
+    """
+    ntml_parser.parse alias
+    @param ntml:
+    @return:
+    """
     global code
     code = ntml
     return ntml_parser.parse(ntml)

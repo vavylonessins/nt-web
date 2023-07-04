@@ -6,7 +6,6 @@ ntmlc.py
 
 """
 
-import sys
 from ntml.ntml_parser import parse
 from ntml.tran import Tran
 

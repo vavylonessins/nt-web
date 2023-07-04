@@ -33,50 +33,52 @@ rels: dict = {
 }
 
 meals: dict = {
-    "body":     {"tag": "body"},
-    "bold":     {"tag": "b"},
-    "b":        {"tag": "b"},
-    "italic":   {"tag": "i"},
-    "i":        {"tag": "i"},
-    "underline":{"tag": "u"},
-    "u":        {"tag": "u"},
-    "strikeout":{"tag": "s"},
-    "s":        {"tag": "s"},
-    "block":    {"tag": "div"},
-    "bl":       {"tag": "div"},
-    "text":     {"tag": "p"},
-    "t":        {"tag": "p"},
-    "input":    {"tag": "input"},
-    "inp":      {"tag": "input"},
-    "h1":       {"tag": "h1"},
-    "h2":       {"tag": "h2"},
-    "h3":       {"tag": "h3"},
-    "h4":       {"tag": "h4"},
-    "ht1":      {"tag": "h1"},
-    "ht2":      {"tag": "h2"},
-    "ht3":      {"tag": "h3"},
-    "ht4":      {"tag": "h4"},
-    "link":     {"tag": "a"},
-    "ln":       {"tag": "a"},
-    "image":    {"tag": "image"},
-    "img":      {"tag": "image"},
-    "cd":       {"tag": "div"},
-    "code":     {"tag": "div"},
-    "form":     {"tag": "form"},
-    "f":        {"tag": "form"},
-    "tr":       {"tag": "tr"},
-    "td":       {"tag": "td"},
-    "scr":      {"tag": "script"},
-    "btn":      {"tag": "button"},
-    "button":   {"tag": "button"},
-    "holder":   {"tag": "div"},
-    "hld":      {"tag": "div"},
-    "ulist":    {"tag": "ul"},
-    "ul":       {"tag": "ul"},
-    "olist":    {"tag": "ol"},
-    "ol":       {"tag": "ol"},
-    "item":     {"tag": "li"},
-    "li":       {"tag": "li"},
+    "body":      {"tag": "body"},
+    "bold":      {"tag": "b"},
+    "b":         {"tag": "b"},
+    "italic":    {"tag": "i"},
+    "i":         {"tag": "i"},
+    "underline": {"tag": "u"},
+    "u":         {"tag": "u"},
+    "strikeout": {"tag": "s"},
+    "s":         {"tag": "s"},
+    "block":     {"tag": "div"},
+    "bl":        {"tag": "div"},
+    "text":      {"tag": "p"},
+    "t":         {"tag": "p"},
+    "input":     {"tag": "input"},
+    "inp":       {"tag": "input"},
+    "h1":        {"tag": "h1"},
+    "h2":        {"tag": "h2"},
+    "h3":        {"tag": "h3"},
+    "h4":        {"tag": "h4"},
+    "ht1":       {"tag": "h1"},
+    "ht2":       {"tag": "h2"},
+    "ht3":       {"tag": "h3"},
+    "ht4":       {"tag": "h4"},
+    "link":      {"tag": "a"},
+    "ln":        {"tag": "a"},
+    "image":     {"tag": "image"},
+    "img":       {"tag": "image"},
+    "cd":        {"tag": "div"},
+    "code":      {"tag": "div"},
+    "form":      {"tag": "form"},
+    "f":         {"tag": "form"},
+    "table":     {"tag": "table"},
+    "tab":       {"tag": "table"},
+    "tr":        {"tag": "tr"},
+    "td":        {"tag": "td"},
+    "scr":       {"tag": "script"},
+    "btn":       {"tag": "button"},
+    "button":    {"tag": "button"},
+    "holder":    {"tag": "div"},
+    "hld":       {"tag": "div"},
+    "ulist":     {"tag": "ul"},
+    "ul":        {"tag": "ul"},
+    "olist":     {"tag": "ol"},
+    "ol":        {"tag": "ol"},
+    "item":      {"tag": "li"},
+    "li":        {"tag": "li"},
 }
 
 
@@ -331,12 +333,12 @@ class Tran:
                             print("│   " + (ln := f.read().split("\n")[nl - 1]).strip())
                         ns -= len(ln) - len(ln.strip())
                         print("│   " + " " * (es - len(ln) - len(ln.strip())) +
-                                "~" * (ns - es + len(ln) - len(ln.strip()) - 1) + "▲")
+                              "~" * (ns - es + len(ln) - len(ln.strip()) - 1) + "▲")
                         print("└───" + "─" * (ns - 1) + "┘")
                         print(f"{tkind} should not have a body\n")
                         sys.exit()
                     if not tprops:
-                        el, es = node.pos
+                        _, es = node.pos
                         nl, ns = node.end_pos
                         print("\nError while parsing file %s," % self.fp)
                         print("At line %d, column %d:" % (nl, ns))
@@ -385,7 +387,8 @@ class Tran:
 
                 if not tbody:
                     if tkind in "hld holder".split():
-                        r = SimpleTagOpen(meals[tkind]["tag"], tprops).to_html()[:-5]+SimpleTagClose(meals[tkind]["tag"]).to_html()
+                        r = SimpleTagOpen(meals[tkind]["tag"],
+                                          tprops).to_html()[:-5]+SimpleTagClose(meals[tkind]["tag"]).to_html()
                     else:
                         r = SimpleTagOpen(meals[tkind]["tag"], tprops).to_html()
                 elif tkind in "table tab".split():
@@ -394,7 +397,8 @@ class Tran:
                         SimpleTagClose("table").to_html()
                 else:
                     r = SimpleTagOpen(meals[tkind]["tag"], tprops).to_html() + \
-                        self.walk_subtree(tbody).strip().replace("\n", "\n    ")+SimpleTagClose(meals[tkind]["tag"]).to_html()
+                        self.walk_subtree(tbody).strip().replace("\n", "\n    ") + \
+                        SimpleTagClose(meals[tkind]["tag"]).to_html()
                     # print(r)
                 self.autospace.pop()
                 return r

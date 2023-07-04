@@ -9,11 +9,9 @@ main NTWeb compiler file
 
 import os
 import sys
-import traceback as tb
 from errors import print_parse_error
 import ntml
 import shutil
-import re
 import parglare
 
 
@@ -74,29 +72,30 @@ def ntml_recursive_compile_all(srcdir: str | os.PathLike,
                 shutil.copy(src, dst)
         compiled.append(f)
 
+
 if "--real-errors" in sys.argv:
     if "--one-file" in sys.argv:
         last_opened = path
         with open(path, "rt") as i:
             with open(path.replace(".ntml", ".html"), "wt") as o:
-                o.write(ntml.compile(i.read()))
+                o.write(ntml.compile(i.read(), path))
         sys.exit()
     print()
     print(path.removesuffix("/") + "/")
     ntml_recursive_compile_all(path + ("/src/" if "--index-file" not in sys.argv else "/"),
-                            path + ("/dst/" if "--index-file" not in sys.argv else "/"))
+                               path + ("/dst/" if "--index-file" not in sys.argv else "/"))
 else:
     try:
         if "--one-file" in sys.argv:
             last_opened = path
             with open(path, "rt") as i:
                 with open(path.replace(".ntml", ".html"), "wt") as o:
-                    o.write(ntml.compile(i.read()))
+                    o.write(ntml.compile(i.read(), path))
             sys.exit()
         print()
         print(path.removesuffix("/") + "/")
         ntml_recursive_compile_all(path + ("/src/" if "--index-file" not in sys.argv else "/"),
-                                path + ("/dst/" if "--index-file" not in sys.argv else "/"))
+                                   path + ("/dst/" if "--index-file" not in sys.argv else "/"))
     except parglare.exceptions.ParseError as pe:
         print()
         nl, ns, dt = str(pe).split(":", 2)
