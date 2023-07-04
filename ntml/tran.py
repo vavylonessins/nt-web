@@ -33,51 +33,50 @@ rels: dict = {
 }
 
 meals: dict = {
-    "body": "body",
-    "bold": "b",
-    "b": "b",
-    "italic": "i",
-    "i": "i",
-    "underline": "u",
-    "u": "u",
-    "strikeout": "s",
-    "s": "s",
-    "block": "div",
-    "bl": "div",
-    "text": "p",
-    "t": "p",
-    "input": "input",
-    "inp": "input",
-    "h1": "h1",
-    "h2": "h2",
-    "h3": "h3",
-    "h4": "h4",
-    "ht1": "h1",
-    "ht2": "h2",
-    "ht3": "h3",
-    "ht4": "h4",
-    "link": "a",
-    "ln": "a",
-    "image": "image",
-    "img": "image",
-    "cd": "div",
-    "code": "div",
-    "form": "form",
-    "f": "form",
-    "tr": "tr",
-    "td": "td",
-    "script": "script",
-    "scr": "script",
-    "btn": "button",
-    "button": "button",
-    "holder": "div",
-    "hld": "div",
-    "ulist": "ul",
-    "ul": "ul",
-    "olist": "ol",
-    "ol": "ol",
-    "item": "li",
-    "li": "li"
+    "body":     {"tag": "body"},
+    "bold":     {"tag": "b"},
+    "b":        {"tag": "b"},
+    "italic":   {"tag": "i"},
+    "i":        {"tag": "i"},
+    "underline":{"tag": "u"},
+    "u":        {"tag": "u"},
+    "strikeout":{"tag": "s"},
+    "s":        {"tag": "s"},
+    "block":    {"tag": "div"},
+    "bl":       {"tag": "div"},
+    "text":     {"tag": "p"},
+    "t":        {"tag": "p"},
+    "input":    {"tag": "input"},
+    "inp":      {"tag": "input"},
+    "h1":       {"tag": "h1"},
+    "h2":       {"tag": "h2"},
+    "h3":       {"tag": "h3"},
+    "h4":       {"tag": "h4"},
+    "ht1":      {"tag": "h1"},
+    "ht2":      {"tag": "h2"},
+    "ht3":      {"tag": "h3"},
+    "ht4":      {"tag": "h4"},
+    "link":     {"tag": "a"},
+    "ln":       {"tag": "a"},
+    "image":    {"tag": "image"},
+    "img":      {"tag": "image"},
+    "cd":       {"tag": "div"},
+    "code":     {"tag": "div"},
+    "form":     {"tag": "form"},
+    "f":        {"tag": "form"},
+    "tr":       {"tag": "tr"},
+    "td":       {"tag": "td"},
+    "scr":      {"tag": "script"},
+    "btn":      {"tag": "button"},
+    "button":   {"tag": "button"},
+    "holder":   {"tag": "div"},
+    "hld":      {"tag": "div"},
+    "ulist":    {"tag": "ul"},
+    "ul":       {"tag": "ul"},
+    "olist":    {"tag": "ol"},
+    "ol":       {"tag": "ol"},
+    "item":     {"tag": "li"},
+    "li":       {"tag": "li"},
 }
 
 
@@ -314,6 +313,12 @@ class Tran:
 
                 tkind = data["type"].strip()
                 tprops = data["props"]
+                if "props" in list(meals[tkind]):
+                    for prop in list(meals[tkind]["props"]):
+                        meals[tkind]["props"][prop] = f'\"{meals[tkind]["props"][prop]}\"'
+                    tprops = (meals[tkind]["props"], data["props"][1])
+                    tprops[0].update(data["props"][0])
+
                 tbody = data["body"]
 
                 if tkind in "hld holder".split():
@@ -380,16 +385,16 @@ class Tran:
 
                 if not tbody:
                     if tkind in "hld holder".split():
-                        r = SimpleTagOpen(meals[tkind], tprops).to_html()[:-5]+SimpleTagClose(meals[tkind]).to_html()
+                        r = SimpleTagOpen(meals[tkind]["tag"], tprops).to_html()[:-5]+SimpleTagClose(meals[tkind]["tag"]).to_html()
                     else:
-                        r = SimpleTagOpen(meals[tkind], tprops).to_html()
+                        r = SimpleTagOpen(meals[tkind]["tag"], tprops).to_html()
                 elif tkind in "table tab".split():
                     r = SimpleTagOpen("table", {}).to_html()+SimpleTagOpen("tbody", tprops).to_html() + \
                         self.walk_subtree(tbody).strip().replace("\n", "\n    ")+SimpleTagClose("tbody").to_html() + \
                         SimpleTagClose("table").to_html()
                 else:
-                    r = SimpleTagOpen(meals[tkind], tprops).to_html() + \
-                        self.walk_subtree(tbody).strip().replace("\n", "\n    ")+SimpleTagClose(meals[tkind]).to_html()
+                    r = SimpleTagOpen(meals[tkind]["tag"], tprops).to_html() + \
+                        self.walk_subtree(tbody).strip().replace("\n", "\n    ")+SimpleTagClose(meals[tkind]["tag"]).to_html()
                     # print(r)
                 self.autospace.pop()
                 return r

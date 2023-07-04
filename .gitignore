@@ -4,3 +4,7 @@ examples/ntweb_site
 .idea
 *.pyc
 *__pycache__*
+dist
+ntml.egg-info
+venv
+__pycache__
