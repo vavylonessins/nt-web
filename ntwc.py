@@ -102,7 +102,7 @@ else:
         nl, ns, dt = str(pe).split(":", 2)
         nl = int(nl.split()[-1])
         ns = int(ns)
-        print_parse_error((nl, ns), last_opened, dt)
+        print_parse_error((nl, ns), last_opened.replace("//", "/"), dt)
     except SystemExit:
         sys.exit()
     except BaseException as be:
