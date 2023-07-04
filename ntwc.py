@@ -6,7 +6,6 @@ main NTWeb compiler file
 
 """
 
-
 import os
 import sys
 from errors import print_parse_error

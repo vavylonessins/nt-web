@@ -1,8 +1,8 @@
 """
 
-ntml/ntml_parser.py
+webfalco/lrparser.py
 
-Reliable to parsing NTML code
+Reliable to parsing WebFalco code
 
 """
 
@@ -10,7 +10,10 @@ Reliable to parsing NTML code
 from typing import *
 from parglare import Grammar, Parser
 from pprint import pformat
-from ntml.const import *
+try:
+    from const import *
+except ImportError:
+    from webfalco.const import *
 
 
 code: str

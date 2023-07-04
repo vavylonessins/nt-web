@@ -1,0 +1,15 @@
+scope frontend /* in falco, you should show scope: backend or frontend? */
+
+/* comment */
+using js
+
+fn main(){
+    print("Hello, World!");
+
+    doc = js:::Document::get();
+
+    text = doc.create_element('p');
+    text.style = "color: red;";
+    text.text_content = "Hello, World!";
+    doc.append(text);
+}

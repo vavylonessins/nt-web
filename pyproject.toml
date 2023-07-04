@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "pyntweb"
+version = "0.2"
+description = "NTWeb - это экосистема компиляторов, которая планирует прийти на замену существующим в web стандартам: HTML, CSS, JS. На данный момент код на её языках переводится в традиционные языки web, так же традиционные языки нативно поддерживаются в самом коде."
+authors = ["Talisman Chet <talismanchet@vk.com>"]
+license = "GNU GPL 3.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+parglare = "^0.16.1"
+colorama = "^0.4.4"
+
+
+[build-system]
+requires = [
+  "setuptools >= 40.9.0",
+]
+build-backend = "setuptool.build_meta"
