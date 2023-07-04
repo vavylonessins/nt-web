@@ -16,7 +16,7 @@ Sroot: Sdoctype ( Simport | Stitle | Stag | Tcomment )*;
 
     Stag: Ttagname Sprops? Sbody?;
 
-        Sprops: "(" ( Sassign ( "," Sassign )* ) ")";
+        Sprops: "(" ( (Sassign ( "," Sassign )*)? (Tat Tstr+)? ) ")";
 
             Sassign: Tname "=" Sexpr;
 
@@ -31,7 +31,7 @@ Sroot: Sdoctype ( Simport | Stitle | Stag | Tcomment )*;
                      | Tfloat
                      | Tint;
 
-        Sbody: "{" ( Stag | Tcomment | Tname | Tescape | Tany )* "}";
+        Sbody: "{" ( Stag | Tcomment | Tname | Tescape | Tany | Tat )* "}";
 
 terminals
 
@@ -47,6 +47,7 @@ Tint: /0[xX](?:_?[0-9a-fA-F])+|0[bB](?:_?[01])+|0[oO](?:_?[0-7])+|(?:0(?:_?0)*|[
 Tverfloat: /\d\.\d+(\.\d+)?/;
 Tfloat: /\d(?:_?\d)*\.(?:\d(?:_?\d)*)?/;
 Tescape: /\[.{1,4}\]/;
+Tat: "@";
 Tany: /(\+|\;|\/|\/|\*|\`|\’|\:|\d|\?|\&|\~|\'|\"SUPPRESS_NEWLINW
 |\!|\-|\,|\.|\)|\]|<|>||\"|\=|\!|\@|\#|\||\$|\%|\^|\&|\*|\:|\/(?!\*)|\d|\b|\w(?!(\(|\{)))+/;
 
@@ -91,13 +92,23 @@ def props_to_dict(n: Optional[list[str | dict]]):
 
     n = flat(n[1:][:-1])
     ret = {}
+    marks = []
     ptr = 0
 
-    while ptr < len(n):
-        ret[n[ptr]] = n[ptr+2]
-        ptr += 4
+    while ptr < len(n) and n[ptr] != "@":
+        if n[ptr]:
+            ret[n[ptr]] = n[ptr+2]
+            ptr += 4
+        else:
+            ptr += 1
+    try:
+        if n[ptr] == "@":
+            for i in n[ptr+1:]:
+                marks.append(eval(i))
+    except IndexError:
+        pass
     
-    return ret
+    return ret, marks
 
 
 def unescape(raw):

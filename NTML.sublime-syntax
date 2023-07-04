@@ -14,7 +14,7 @@ contexts:
     - match: '\/\*[^\*\/]*\*\/'
       scope: comment.outline.ntml
 
-    - match: '\b(table|tab|f(orm)?|t(r|d)|body|b(old)?|i(talic)?|u(nderline)?|s(trokeout)?|bl(ock)?|t(ext)?|inp(ut)?|ht?[1-4]|ln|link|img|image|code|cd)\b\s*((?=\()|(?=\{))'
+    - match: '\b(item|li|(o|u)l(ist)?|scr(ipt)?|button|btn|holder|hld|table|tab|f(orm)?|t(r|d)?|body|b(old)?|i(talic)?|u(nderline)?|s(trokeout)?|bl(ock)?|text|inp(ut)?|ht?[1-4]|ln|link|img|image|code|cd)\s*(?=(\(|{))'
       scope: keyword.control.ntml
 
     - match: \b(ntml|style|script|favicon)\b

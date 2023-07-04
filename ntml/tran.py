@@ -69,7 +69,15 @@ meals: dict = {
     "script": "script",
     "scr": "script",
     "btn": "button",
-    "button": "button"
+    "button": "button",
+    "holder": "div",
+    "hld": "div",
+    "ulist": "ul",
+    "ul": "ul",
+    "olist": "ol",
+    "ol": "ol",
+    "item": "li",
+    "li": "li"
 }
 
 
@@ -202,7 +210,7 @@ class SimpleTagOpen:
 
     def __init__(self, kind: str, props: Optional[dict] = None):
         self.kind = kind
-        self.props = tran_props(props) if props else ""
+        self.props = (tran_props(props[0]) + " " + " ".join(props[1])) if props else ""
     
     def to_html(self) -> str:
         """
@@ -308,7 +316,34 @@ class Tran:
                 tprops = data["props"]
                 tbody = data["body"]
 
-                if tkind != "script":
+                if tkind in "hld holder".split():
+                    if tbody:
+                        el, es = node.pos
+                        nl, ns = node.end_pos
+                        print("\nError while parsing file %s," % self.fp)
+                        print("At line %d, column %d:" % (nl, ns))
+                        with open(self.fp, "rt") as f:
+                            print("│   " + (ln := f.read().split("\n")[nl - 1]).strip())
+                        ns -= len(ln) - len(ln.strip())
+                        print("│   " + " " * (es - len(ln) - len(ln.strip())) +
+                                "~" * (ns - es + len(ln) - len(ln.strip()) - 1) + "▲")
+                        print("└───" + "─" * (ns - 1) + "┘")
+                        print(f"{tkind} should not have a body\n")
+                        sys.exit()
+                    if not tprops:
+                        el, es = node.pos
+                        nl, ns = node.end_pos
+                        print("\nError while parsing file %s," % self.fp)
+                        print("At line %d, column %d:" % (nl, ns))
+                        with open(self.fp, "rt") as f:
+                            print("│   " + (ln := f.read().split("\n")[nl - 1]).strip())
+                        ns -= len(ln) - len(ln.strip())
+                        print("│   " + " " * (ns - 1) + "▲")
+                        print("└───" + "─" * (ns - 1) + "┘")
+                        print(f"{tkind} needs a properties\n")
+                        sys.exit()
+
+                elif tkind != "script":
                     if tkind in "img image".split():
                         if tbody is not None or tprops is None:
                             el, es = node.pos
@@ -344,7 +379,10 @@ class Tran:
                     self.autospace.append(True)
 
                 if not tbody:
-                    r = SimpleTagOpen(meals[tkind], tprops).to_html()
+                    if tkind in "hld holder".split():
+                        r = SimpleTagOpen(meals[tkind], tprops).to_html()[:-5]+SimpleTagClose(meals[tkind]).to_html()
+                    else:
+                        r = SimpleTagOpen(meals[tkind], tprops).to_html()
                 elif tkind in "table tab".split():
                     r = SimpleTagOpen("table", {}).to_html()+SimpleTagOpen("tbody", tprops).to_html() + \
                         self.walk_subtree(tbody).strip().replace("\n", "\n    ")+SimpleTagClose("tbody").to_html() + \
