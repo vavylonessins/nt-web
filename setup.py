@@ -5,7 +5,7 @@ setup.py
 from setuptools import setup
 
 setup(name='pyntweb',
-      version='0.2',
+      version='0.2.5',
       description='''
 NTWeb - это экосистема компиляторов, которая планирует прийти на замену существующим в web стандартам: 
 HTML, CSS, JS. На данный момент код на её языках переводится в традиционные языки web, так же 

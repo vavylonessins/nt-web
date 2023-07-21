@@ -80,6 +80,7 @@ meals: dict = {
     "ol":        {"tag": "ol"},
     "item":      {"tag": "li"},
     "li":        {"tag": "li"},
+    "select":    {"tag": "select"},
 }
 
 
