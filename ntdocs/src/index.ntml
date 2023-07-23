@@ -1,0 +1,14 @@
+doctype ntml 0.2
+
+import (style, "text/css") "style.css"
+
+
+body {
+	bl (class="nav") {
+		bl (class="ver") {
+			t (class="ver-text") {
+				code #{NTWeb 0.2}
+			}
+		}
+	}
+}

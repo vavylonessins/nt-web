@@ -25,7 +25,7 @@ Sroot: Sdoctype ( Simport | Stitle | Stag | Tcomment )*;
 
     Stitle: Ttitle Tstr;
 
-    Stag: Ttagname Sprops? Sbody? | Tscript Sprops Tbody?;
+    Stag: Ttagname Sprops? Sbody? | Tscript Sprops Tbody? | Tcode Tbody;
 
         Sprops: "(" ( (Sassign ( "," Sassign )*)? (Tat Tstr+)? ) ")";
 
@@ -52,8 +52,9 @@ Tdoctype: "doctype";
 Tntml: /ntml/;
 Timport: "import";
 Ttitle: "title";
+Tcode: /code\b\s*(?=\#\{)/;
 Tscript: /script\b\s*(?=\()/;
-Ttagname: /(?!script)\b[A-Za-zА-Яа-яЁё_-]\w*\b\s*(?=(\(|\{))/;
+Ttagname: /\b(?!(script|code))[A-Za-zА-Яа-яЁё_-]\w*\b\s*(?=(\(|\{))/;
 Tname: /\b[A-Za-zА-Яа-яЁё_-]\w*\b(?!(\(|\{))/;
 Tint: /0[xX](?:_?[0-9a-fA-F])+|0[bB](?:_?[01])+|0[oO](?:_?[0-7])+|(?:0(?:_?0)*|[1-9](?:_?\d)*)/;
 Tverfloat: /\d\.\d+(\.\d+)?/;
@@ -61,7 +62,7 @@ Tfloat: /\d(?:_?\d)*\.(?:\d(?:_?\d)*)?/;
 Tescape: /\[.{1,4}\]/;
 Tat: "@";
 Tbody: /\#\{[^\}\\]*(?:\[.[^\}\\]\]*)*\}/;
-Tany: /(\+|\;|\/|\/|\*|\`|\’|\:|\d|\?|\&|\~|\'|\"SUPPRESS_NEWLINW
+Tany: /(\+|\;|\/|\/|\*|\`|\’|\:|\d|\?|\&|\~|\'|\"SUPPRESS_NEWLINE
 |\!|\-|\,|\.|\)|\]|<|>||\"|\=|\!|\@|\#|\||\$|\%|\^|\&|\*|\:|\/(?!\*)|\d|\b|\w(?!(\(|\{)))+/;
 
 """.replace("SUPPRESS_NEWLINE\n", "")
@@ -203,7 +204,9 @@ actions = {
     "Stag": [lambda _, n: Node("tag", {"type": n[0], "props": n[1], "body": n[2]}, gnp(_.start_position),
                                gnp(_.end_position)),
              lambda _, n: Node("tag", {"type": "script", "props": n[1], "body": script_body(n[2])},
-                               gnp(_.start_position), gnp(_.end_position))],
+                               gnp(_.start_position), gnp(_.end_position)),
+             lambda _, n: Node("tag", {"type": "code", "props": None, "body": script_body(n[1])}, gnp(_.start_position),
+                               gnp(_.end_position))],
     "Sprops": lambda _, n: props_to_dict(n),
     "Sbody": lambda _, n: n[1],
     "Tint": lambda _, n: '"' + n + '"',

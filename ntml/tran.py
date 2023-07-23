@@ -347,7 +347,10 @@ class Tran:
 
                 tbody = data["body"]
 
-                if tkind in "hld holder".split():
+                if tkind in "code cd".split():
+                    return tbody
+
+                elif tkind in "hld holder".split():
                     if tbody:
                         el, es = node.pos
                         nl, ns = node.end_pos

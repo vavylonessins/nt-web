@@ -8,3 +8,4 @@ dist
 ntml.egg-info
 venv
 __pycache__
+build_docs.sh
