@@ -183,6 +183,8 @@ class Import:
         Converts to HTML
         @return: str
         """
+        if self.sem == "script":
+            return f"<script href=\"{self.path}\" type=\"{self.kind}\">\n"
         return f"<link rel=\"{rels[self.sem]}\" href=\"{self.path}\" type=\"{self.kind}\">\n"
 
 
@@ -389,8 +391,13 @@ class Tran:
                 if tkind in "script scr".split():
                     self.autospace.pop()
                     del tprops[0]["lang"]
-                    return SimpleTagOpen(meals[tkind]["tag"], tprops).to_html() + tbody + \
-                        SimpleTagClose(meals[tkind]["tag"]).to_html()
+                    if "src" in tprops[0]:
+                        tprops[0]["href"] = tprops[0]["src"]
+                        del tprops[0]["src"]
+                    ret = SimpleTagOpen(meals[tkind]["tag"], tprops).to_html()
+                    if tbody and "href" not in tprops[0]:
+                        ret += tbody + SimpleTagClose(meals[tkind]["tag"]).to_html()
+                    return ret
 
                 if not tbody:
                     if tkind in "hld holder".split():

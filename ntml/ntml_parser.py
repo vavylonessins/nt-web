@@ -53,8 +53,8 @@ Tntml: /ntml/;
 Timport: "import";
 Ttitle: "title";
 Tscript: /script\b\s*(?=\()/;
-Ttagname: /(?!script)\b[A-Za-zА-Яа-яЁё_]\w*\b\s*(?=(\(|\{))/;
-Tname: /\b[A-Za-zА-Яа-яЁё_]\w*\b(?!(\(|\{))/;
+Ttagname: /(?!script)\b[A-Za-zА-Яа-яЁё_-]\w*\b\s*(?=(\(|\{))/;
+Tname: /\b[A-Za-zА-Яа-яЁё_-]\w*\b(?!(\(|\{))/;
 Tint: /0[xX](?:_?[0-9a-fA-F])+|0[bB](?:_?[01])+|0[oO](?:_?[0-7])+|(?:0(?:_?0)*|[1-9](?:_?\d)*)/;
 Tverfloat: /\d\.\d+(\.\d+)?/;
 Tfloat: /\d(?:_?\d)*\.(?:\d(?:_?\d)*)?/;
@@ -162,8 +162,14 @@ def unescape(raw):
     if data == "nl":
         return "<br/>"
     
-    elif data == "sp":
+    elif data in ("sp", "space"):
         return "&nbsp;"
+
+    elif data in ("per", "perc", "percent", "percentage"):
+        return "%"
+
+    elif data in ("hash", "tag", "hashtag", "anchor", "anch"):
+        return "#"
     
     elif data in ("c", "cp", "copy"):
         return "&copy;"
