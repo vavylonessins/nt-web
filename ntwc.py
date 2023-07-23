@@ -8,7 +8,7 @@ main NTWeb compiler file
 
 import os
 import sys
-from errors import print_parse_error
+from ntml.errors import print_parse_error
 import ntml
 import shutil
 import parglare
