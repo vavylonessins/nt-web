@@ -52,8 +52,8 @@ Tdoctype: "doctype";
 Tntml: /ntml/;
 Timport: "import";
 Ttitle: "title";
-Tcode: /code\b\s*(?=\#\{)/;
-Tscript: /script\b\s*(?=\()/;
+Tcode: /code(?=\b\s*\#\{)/;
+Tscript: /script(?=\b\s*\()/;
 Ttagname: /\b(?!(script|code))[A-Za-zА-Яа-яЁё_-]\w*\b\s*(?=(\(|\{))/;
 Tname: /\b[A-Za-zА-Яа-яЁё_\-]*\b(?!(\(|\{))/;
 Tint: /0[xX](?:_?[0-9a-fA-F])+|0[bB](?:_?[01])+|0[oO](?:_?[0-7])+|(?:0(?:_?0)*|[1-9](?:_?\d)*)/;
@@ -74,7 +74,10 @@ def script_body(body: str) -> str:
     @param body:
     @return:
     """
-    body = body.removeprefix("#{").removesuffix("}").replace("[}]", "}")
+    try:
+        body = body.removeprefix("#{").removesuffix("}").replace("[}]", "}")
+    except:
+        pass
     return body
 
 

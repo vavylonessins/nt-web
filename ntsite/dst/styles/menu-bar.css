@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: #CAD3F5;
+}
+
+body {
+  background-color: #1E1E2E;
+}
+
+.menu-bar {
+  background-color: #40404D;
+  max-height: 80px;
+  /*border: 1px solid #CAD3F540;*/
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  border-bottom-left-radius: 40px;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-width: 0;
+}
+
+
+
+@media screen and (min-width:900px) {
+  .brand-logo {
+    width: 80px;
+    height: 80px;
+    margin-left: -3px;
+  }
+  .menu-bar p{
+    font-size: 30px;
+  }
+}
+
+
+@media screen and (min-width:500px) and (max-width:899px) {
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+    margin-left: -3px;
+  }
+  .menu-bar p{
+    display: none;
+  }
+}
+
+@media screen and (min-width:300px) and (max-width:499px) {
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+    margin-left: -3px;
+  }
+  .menu-bar p{
+    display: none;
+  }
+}
+
+
+
+.menu-bar-separator {
+  overflow: auto;
+  width: 100%;
+}
+
+.menu-button {
+  padding-right: 32px;
+  text-decoration: none;
+  font-weight: bolder;
+}
+
+h1 {
+  margin-left: 16px;
+}
