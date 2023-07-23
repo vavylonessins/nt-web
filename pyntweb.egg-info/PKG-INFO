@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: pyntweb
+Version: 0.2.17
+Summary: NTWeb - это экосистема компиляторов, которая планирует прийти на замену существующим в web стандартам: HTML, CSS, JS. На данный момент код на её языках переводится в традиционные языки web, так же традиционные языки нативно поддерживаются в самом кодеПосесите оффициальную группу проекта: https://t.me/+ft6pYhYcqtk3NDdi
+Author-email: talismanchet@vk.com
+License: GNU GPL 3.0
+License-File: LICENSE
