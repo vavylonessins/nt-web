@@ -1,0 +1,105 @@
+doctype ntml 0.1
+
+import (favicon, "image/png") "../images/icon_logo.png"
+import (style, "text/css") "../styles/menu-bar.css"
+import (style, "text/css") "../styles/main.css"
+import (style, "text/css") "../styles/ui.css"
+
+title "NTWeb"
+
+
+body {
+	bl (class="root") {
+		bl (class="menu-bar"){
+			tab {
+				td (class="menu-logo") {
+					ln (href="../index.html"){
+						img (class="brand-logo", alt="NTWeb Logo", src="../images/logo.png")
+					}
+				}
+				td (class="menu-bar-separator") {ht1 {NT Web}}
+				td {ln (class="menu-button", href="#"){Скачать}}
+				td {ln (class="menu-button", href="docs"){Документация}}
+				td {ln (class="menu-button", href="ntwpi"){NTWPI}}
+				td {ln (class="menu-button", href="community"){Сообщество}}
+				td {ln (class="menu-button", href="blog"){Блог}}
+			}
+		}
+		bl (class="banner-root") {
+			[nl]
+			
+			ht2 {Загрузите последнюю версию}[nl]
+			
+			btn (class="download-button") {
+				tab {
+					td {
+						img (src="../images/arrow_down.png", class="download-button-icon")
+					}
+					
+					td (class="download-button-text") {
+						Скачать NTWebC 0.2 patch 4 [sp][sp][sp]
+					}
+				}
+			}
+			
+			[nl][nl]
+			
+			t {Хотите помочь в разработке? Вступайте в оффициальную группу ln (href="https://t.me/+cbLrUCFlF6JjMGNi") {Telegram}!}
+
+			bl (class="wide-row") {
+				bl (class="wide-widget") {
+					ht2 { Поддерживаемые выпуски }
+				}
+
+				[nl]
+
+				tab (class="releases-table release-header", border="1", cellpadding="0") {
+					tr {
+						td (class="release-header") {Версия}
+						td (class="release-header") {Дата выпуска}
+						td (class="release-header") {Нажмите для подробностей}
+					}
+
+					tr {
+						td (class="tb-vers-td") {NTWeb 0.2 patch 4}
+						td {02.07.23}
+						td {ln (href="../release/v0s2p4/index.html") {Страница выпуска}}
+					}
+
+					tr {
+						td (class="tb-vers-td") {NTWeb 0.2 patch 3}
+						td {01.07.23}
+						td {ln (href="../releases/v0s2p3/index.html") {Страница выпуска}}
+					}
+
+					tr {
+						td (class="tb-vers-td") {NTWeb 0.2 patch 2}
+						td {01.07.23}
+						td {ln (href="../releases/v0s2p2/index.html") {Страница выпуска}}
+					}
+
+					tr {
+						td (class="tb-vers-td") {NTWeb 0.2 patch 1}
+						td {31.06.23}
+						td {ln (href="../releases/v0s2p1/index.html") {Страница выпуска}}
+					}
+
+					tr {
+						td (class="tb-vers-td") {NTWeb 0.2}
+						td {31.06.23}
+						td {ln (href="../releases/v0s2p0/index.html") {Страница выпуска}}
+					}
+
+					tr {
+						td (class="tb-vers-td") {NTWeb 0.1 }
+						td {30.06.23}
+						td {ln (href="../releases/v0s1p0/index.html") {Страница выпуска}}
+					}
+				}
+		    }
+		}
+		bl (class="footer") {
+			Copyright[sp][c][sp]2021-2023
+		}
+	}
+}

@@ -1,0 +1,54 @@
+/* #24FF7A */
+
+.download-button {
+  height: 64px;
+  background-color: #24FF7A;
+  color: #1E1E2E;
+  border-radius: 32px;
+  border-width: 0;
+  font-family: "Fira Sans", Helvetica, Arial, sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+.download-button-text {
+  color: #1E1E2E;
+  font-family: "Fira Sans", Helvetica, Arial, sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+.download-button-icon {
+  width: 52px;
+  height: 52px;
+  margin-left: 4px;
+  margin-top: -4px;
+}
+
+.releases-table {
+  border: 1px solid #40404D;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.release-header {
+  border-right-width: 0;
+}
+
+.releases-table td, .releases-table tr {
+  width: 33%;
+}
+
+/*
+.releases-table tr {
+  border: 1px solid #40404D;
+  border-left-width: 0;
+  border-top-width: 0;
+  width: 33%;
+}
+
+.releases-td {
+  width: 250px;
+  overflow: auto;
+}
+*/

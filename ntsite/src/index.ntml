@@ -1,0 +1,69 @@
+doctype ntml 0.1
+
+import (favicon, "image/png") "images/icon_logo.png"
+import (style, "text/css") "styles/menu-bar.css"
+import (style, "text/css") "styles/main.css"
+
+title "NTWeb"
+
+
+body (lang = "ru-ru") {
+	bl (class="root") {
+		bl (class="menu-bar"){
+			tab {
+				td (class="menu-logo") {
+					ln (href="#"){
+						img (class="brand-logo", alt="NTWeb Logo", src="images/logo.png")
+					}
+				}
+				td (class="menu-bar-separator") {ht1 {NT Web}}
+				td {ln (class="menu-button", href="downloads/index.html"){Скачать}}
+				td {ln (class="menu-button", href="docs"){Документация}}
+				td {ln (class="menu-button", href="ntwpi"){NTWPI}}
+				td {ln (class="menu-button", href="community"){Сообщество}}
+				td {ln (class="menu-button", href="blog"){Блог}}
+				td {ln (class="menu-button", onclick="gotoMyAccount"){holder (@ "accountName")}}
+			}
+		}
+
+		bl (class="banner-root") {
+				[nl]
+			  	t { b{NTWeb} - это экосистема компиляторов, которая планирует прийти на замену существующим
+			  		в web стандартам: HTML, CSS, JS. На данный момент код на её языках переводится в традиционные
+			  		языки web, так же традиционные языки нативно поддерживаются в самом коде. ln (href="docs") {Подробнее >>>} }
+			  	[nl][nl]
+			bl (class="row") {
+				bl (class="small-widget") {
+		            ht2 (class="widget-title") {
+		            	Давайте начнём
+		            }
+		            t {
+		            	Если вы новичок в программировании или опытный разработчик,
+		             легко учиться и использовать NTWeb.
+		            }
+		            [nl]
+					t { ln (href="tutorials/get-started/page0") { Шпаргалка новичка } }
+		        }
+		        bl (class="small-widget") {
+		            ht2 (class="widget-title") {
+		            	Скачать
+		            }
+					t { Исходный код и установщики NTWeb доступны для загрузки для всех версий! }
+					[nl]
+					t { Последняя: ln (href="/downloads/release/latest") {NTWeb 0.2 patch 3} }
+		        }
+		        bl (class="small-widget") {
+		            ht2 (class="widget-title") {
+		            	Документация
+		            }
+					t {Документация для NTWeb, а также учебные пособия и руководства сейчас доступны.}
+					[nl]
+					t { ln (href="docs") {Go to docs} }
+		        }
+		    }
+		}
+		bl (class="footer") {
+			Copyright[sp][c][sp]2021-2023
+		}
+	}
+}
