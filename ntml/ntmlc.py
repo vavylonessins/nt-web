@@ -5,13 +5,12 @@ ntmlc.py
 Ершы ьщвгду шы туув ещ щьзшду ТЕЬД сщву ещ РЕЬД
 
 """
-from typing import Union
 
 from ntml.ntml_parser import parse
 from ntml.tran import Tran
 
 
-def ntml_compile(ntml: Union[str, bytes], fp: str) -> str:
+def ntml_compile(ntml: str | bytes, fp: str) -> str:
     """
     
     fucntion compile
