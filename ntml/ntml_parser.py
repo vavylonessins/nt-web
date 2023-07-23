@@ -164,12 +164,6 @@ def unescape(raw):
     
     elif data == "sp":
         return "&nbsp;"
-
-    elif data == "per":
-        return "%"
-
-    elif data == "tag":
-        return "#"
     
     elif data in ("c", "cp", "copy"):
         return "&copy;"
