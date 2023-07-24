@@ -205,7 +205,7 @@ class Import:
         @return: str
         """
         if self.sem == "script":
-            return f"<script href=\"{self.path}\" type=\"{self.kind}\">\n"
+            return f"<script src=\"{self.path}\" type=\"{self.kind}\"></script>\n"
         return f"<link rel=\"{rels[self.sem]}\" href=\"{self.path}\" type=\"{self.kind}\">\n"
 
 
@@ -242,8 +242,8 @@ class SimpleTagOpen:
         Converts to HTML
         @return: str
         """
-        if self.kind == "body":
-            return f"<html {self.props}><body>\n    "
+        #if self.kind == "body":
+        #    return f"<html {self.props}><body>\n    "
         return f"<{self.kind}{self.props}>\n    "
     
 
@@ -415,9 +415,6 @@ class Tran:
                 if tkind in "script scr".split():
                     self.autospace.pop()
                     del tprops[0]["lang"]
-                    if "src" in tprops[0]:
-                        tprops[0]["href"] = tprops[0]["src"]
-                        del tprops[0]["src"]
                     ret = SimpleTagOpen(meals[tkind]["tag"], tprops).to_html()
                     if tbody and "href" not in tprops[0]:
                         ret += tbody + SimpleTagClose(meals[tkind]["tag"]).to_html()
