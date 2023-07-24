@@ -9,6 +9,7 @@ ntcss/ntmlc.py
 ntcss/tran.py
 ntml/__init__.py
 ntml/const.py
+ntml/errors.py
 ntml/ntml_parser.py
 ntml/ntmlc.py
 ntml/tran.py

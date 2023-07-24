@@ -56,7 +56,7 @@ Ttitle: "title";
 Tcode: /code(?=\b\s*\#\{)/;
 Tscript: /script(?=\b\s*\()/;
 Ttagname: /\b(?!(script|code))[A-Za-zА-Яа-яЁё_-]\w*\b\s*(?=(\(|\{))/;
-Tname: /\b(?!script(?=\b\s*\()|code(?=\b\s*\#\{))[A-Za-zА-Яа-яЁё_-]\w*\b(?!\(|\{|\#)/;
+Tname: /\b[A-Za-zА-Яа-яЁё_\-]*\b(?!(\(|\{))/;
 Tint: /0[xX](?:_?[0-9a-fA-F])+|0[bB](?:_?[01])+|0[oO](?:_?[0-7])+|(?:0(?:_?0)*|[1-9](?:_?\d)*)/;
 Tverfloat: /\d\.\d+(\.\d+)?/;
 Tfloat: /\d(?:_?\d)*\.(?:\d(?:_?\d)*)?/;
