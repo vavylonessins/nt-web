@@ -1,0 +1,40 @@
+doctype ntml 0.2
+
+import (favicon, "image/png") "../images/icon_logo.png"
+import (style, "text/css") "../styles/menu-bar.css"
+import (style, "text/css") "../styles/main.css"
+import (style, "text/css") "../styles/ui.css"
+
+title "NTWeb - Get started"
+
+
+body (lang = "ru-ru") {
+	bl (class="root") {
+		bl (class="menu-bar"){
+			tab {
+				td (class="menu-logo") {
+					ln (href="../../../index.html"){
+						img (class="brand-logo", alt="NTWeb Logo", src="../images/logo.png")
+					}
+				}
+				td (class="menu-bar-separator") {ht1 {NT Web}}
+				td {ln (class="menu-button", href="../downloads/index.html"){Скачать}}
+				td {ln (class="menu-button", href="../docs/index.html"){Документация}}
+				td {ln (class="menu-button", href="../ntwpi/index.html"){NTWPI}}
+				td {ln (class="menu-button", href="https://t.me/+ft6pYhYcqtk3NDdi"){Сообщество}}
+				td {ln (class="menu-button", href="../blog/index.html"){Блог}}
+			}
+		}
+
+		bl (class="banner-root") {
+			ht1 {Ошибка 404}
+			t {
+				Извините, но произошла ошибка. Вероятнее всего, она возникла code#{ из-за}
+				того, что вы пытаетесь получить доступ к несуществующей странице.[nl][nl]Error404 Not Found
+			}
+		}
+		bl (class="footer") {
+			Copyright[sp][c][sp]2021-2023
+		}
+	}
+}
