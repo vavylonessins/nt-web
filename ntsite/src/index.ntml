@@ -18,11 +18,10 @@ body (lang = "ru-ru") {
 				}
 				td (class="menu-bar-separator") {ht1 {NT Web}}
 				td {ln (class="menu-button", href="downloads/index.html"){Скачать}}
-				td {ln (class="menu-button", href="docs"){Документация}}
-				td {ln (class="menu-button", href="ntwpi"){NTWPI}}
-				td {ln (class="menu-button", href="community"){Сообщество}}
-				td {ln (class="menu-button", href="blog"){Блог}}
-				td {ln (class="menu-button", onclick="gotoMyAccount"){holder (@ "accountName")}}
+				td {ln (class="menu-button", href="docs/index.html"){Документация}}
+				td {ln (class="menu-button", href="ntwpi/index.html"){NTWPI}}
+				td {ln (class="menu-button", href="https://t.me/+ft6pYhYcqtk3NDdi"){Сообщество}}
+				td {ln (class="menu-button", href="blog/index.html"){Блог}}
 			}
 		}
 
@@ -42,7 +41,7 @@ body (lang = "ru-ru") {
 		             легко учиться и использовать NTWeb.
 		            }
 		            [nl]
-					t { ln (href="tutorials/get-started/page0") { Шпаргалка новичка } }
+					t { ln (href="docs/tutorials/get_started/p0.html") { Шпаргалка новичка } }
 		        }
 		        bl (class="small-widget") {
 		            ht2 (class="widget-title") {
@@ -50,7 +49,7 @@ body (lang = "ru-ru") {
 		            }
 					t { Исходный код и установщики NTWeb доступны для загрузки для всех версий! }
 					[nl]
-					t { Последняя: ln (href="/downloads/release/latest") {NTWeb 0.2 patch 3} }
+					t { ln (href="release/v0_2_18/index.html") {NTWeb code #{ 0.2.18}} }
 		        }
 		        bl (class="small-widget") {
 		            ht2 (class="widget-title") {
@@ -58,7 +57,7 @@ body (lang = "ru-ru") {
 		            }
 					t {Документация для NTWeb, а также учебные пособия и руководства сейчас доступны.}
 					[nl]
-					t { ln (href="docs") {Go to docs} }
+					t { ln (href="docs/index.html") {Перейти к документации} }
 		        }
 		    }
 		}

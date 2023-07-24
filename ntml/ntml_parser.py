@@ -42,10 +42,11 @@ Sroot: Sdoctype ( Simport | Stitle | Stag | Tcomment )*;
                      | Tfloat
                      | Tint;
 
-        Sbody: "{" ( Stag | Tcomment | Tname | Tescape | Tany | Tat )* "}";
+        Sbody: Topenbody ( Stag | Tcomment | Tname | Tescape | Tany | Tat )* "}";
 
 terminals
 
+Topenbody: /(?!\[)\{(?!\])/;
 Tstr: /"[^"\\]*(?:\\.[^"\\]*)*"/;
 Tcomment: /\/\*.*\*\//;
 Tdoctype: "doctype";
@@ -59,11 +60,11 @@ Tname: /\b(?!script(?=\b\s*\()|code(?=\b\s*\#\{))[A-Za-zА-Яа-яЁё_-]\w*\b(?
 Tint: /0[xX](?:_?[0-9a-fA-F])+|0[bB](?:_?[01])+|0[oO](?:_?[0-7])+|(?:0(?:_?0)*|[1-9](?:_?\d)*)/;
 Tverfloat: /\d\.\d+(\.\d+)?/;
 Tfloat: /\d(?:_?\d)*\.(?:\d(?:_?\d)*)?/;
-Tescape: /\[.{1,4}\]/;
+Tescape: /\[(\w+|\[|\{|\(|\})\]/;
 Tat: "@";
 Tbody: /\#\{[^\}\\]*(?:\[.[^\}\\]\]*)*\}/;
 Tany: /(\+|\;|\/|\/|\*|\`|\’|\:|\d|\?|\&|\~|\'|\"SUPPRESS_NEWLINE
-|\!|\-|\,|\.|\)|\]|<|>||\"|\=|\!|\@|\#|\||\$|\%|\^|\&|\*|\:|\/(?!\*)|\d|\b|\w(?!(\(|\{)))+/;
+|\!|\-|\,|\.|\)|\]|<|>||\"|\=|\!|\@|\#|\||\%|\^|\&|\*|\:|\/(?!\*)|\d|\b|\w(?!(\(|\{)))+/;
 
 """.replace("SUPPRESS_NEWLINE\n", "")
 
@@ -174,6 +175,9 @@ def unescape(raw):
 
     elif data in ("hash", "tag", "hashtag", "anchor", "anch"):
         return "#"
+
+    elif data in ("bux", "dollar", "money", "shuser", "bash", "bashuser"):
+        return "$"
     
     elif data in ("c", "cp", "copy"):
         return "&copy;"

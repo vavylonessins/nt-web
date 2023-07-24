@@ -1,0 +1,63 @@
+doctype ntml 0.2
+
+import (favicon, "image/png") "../../../images/icon_logo.png"
+import (style, "text/css") "../../../styles/menu-bar.css"
+import (style, "text/css") "../../../styles/main.css"
+import (style, "text/css") "../../../styles/ui.css"
+
+title "NTWeb - Get started"
+
+
+body (lang = "ru-ru") {
+	bl (class="root") {
+		bl (class="menu-bar"){
+			tab {
+				td (class="menu-logo") {
+					ln (href="../../../index.html"){
+						img (class="brand-logo", alt="NTWeb Logo", src="../../../images/logo.png")
+					}
+				}
+				td (class="menu-bar-separator") {ht1 {NT Web}}
+				td {ln (class="menu-button", href="../../../downloads/index.html"){Скачать}}
+				td {ln (class="menu-button", href="../../../docs/index.html"){Документация}}
+				td {ln (class="menu-button", href="../../../ntwpi/index.html"){NTWPI}}
+				td {ln (class="menu-button", href="https://t.me/+ft6pYhYcqtk3NDdi"){Сообщество}}
+				td {ln (class="menu-button", href="../../../blog/index.html"){Блог}}
+			}
+		}
+
+		bl (class="banner-root") {
+			ht1 {Ознакомительный путеводитель [sp] - Страница 1}
+			t {
+				В NTWeb есть [sp][(]code#{ровно} как и в обычном вебе) разметка. Обычно её пишут на HTML, но в нашем
+				случае будет использоваться язык NTML. Он является частью экосистемы и потому используется.
+				[nl][nl]
+				Давайте напишем простейшую страницу, используя NTML:
+			}
+			[nl]
+			bl (class="code-block"){
+				code #{doctype ntml 0.2}[nl][nl]
+
+				code #{title "Пример"}[nl][nl]
+
+
+				code #{body }[{][nl]
+				[sp][sp][sp][sp]code #{Простейшая web-страница используя NTML!}[nl]
+				[}]
+			}
+			[nl]
+			t {
+				Теперь, чтобы собрать ваш код в готовый для браузеров HTML, нам нужно создать папку, в которой будут 2 папки:
+				code#{<span class="code-inline">src</span>} и code#{<span class="code-inline">dst</span>}. Этот код мы должны положить в папку
+				code#{<span class="code-inline">src</span>}. После этого, выполняем комманду:[nl][nl]
+				t(class="code-block"){[shuser] code#{ ntwebc path/to/folder}}
+				[nl]
+				Теперь вы можете обнаружить в подпапке code#{<span class="code-inline">dst</span>} code#{ HTML-файл,} если его
+				открыть в браузере, вы увидите страницу, которую только что написали.
+			}
+		}
+		bl (class="footer") {
+			Copyright[sp][c][sp]2021-2023
+		}
+	}
+}

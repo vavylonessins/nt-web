@@ -1,11 +1,11 @@
-doctype ntml 0.1
+doctype ntml 0.2
 
 import (favicon, "image/png") "../../images/icon_logo.png"
 import (style, "text/css") "../../styles/menu-bar.css"
 import (style, "text/css") "../../styles/main.css"
 import (style, "text/css") "../../styles/ui.css"
 
-title "NTWeb"
+title "NTWeb 0.2.18"
 
 
 body {
@@ -13,16 +13,16 @@ body {
 		bl (class="menu-bar", style="margin-bottom: 32px;"){
 			tab {
 				td (class="menu-logo") {
-					ln (href="#"){
-						img (class="brand-logo", alt="NTWeb Logo", src="images/logo.png")
+					ln (href="../../index.html"){
+						img (class="brand-logo", alt="NTWeb Logo", src="../../images/logo.png")
 					}
 				}
 				td (class="menu-bar-separator") {ht1 {NT Web}}
-				td {ln (class="menu-button", href="downloads/index.html"){Скачать}}
-				td {ln (class="menu-button", href="docs"){Документация}}
-				td {ln (class="menu-button", href="ntwpi"){NTWPI}}
-				td {ln (class="menu-button", href="community"){Сообщество}}
-				td {ln (class="menu-button", href="blog"){Блог}}
+				td {ln (class="menu-button", href="../../downloads/index.html"){Скачать}}
+				td {ln (class="menu-button", href="../../docs/index.html"){Документация}}
+				td {ln (class="menu-button", href="../../ntwpi/index.html"){NTWPI}}
+				td {ln (class="menu-button", href="https://t.me/+ft6pYhYcqtk3NDdi"){Сообщество}}
+				td {ln (class="menu-button", href="../../blog/index.html"){Блог}}
 			}
 		}
 		bl (class="banner-root") {
@@ -34,18 +34,18 @@ body {
 					td {btn (class="download-button") {
 						tab {
 							td {
-								img (src="images/arrow_down.png", class="download-button-icon")
+								img (src="../../images/arrow_down.png", class="download-button-icon")
 							}
 						
 							td (class="download-button-text") {
-								Скачать NTWebC 0.2 patch 4 [sp][sp][sp]
+								Скачать NTWeb code #{ 0.2.18} [sp][sp][sp]
 							}
 						}
 					}
 				}
 			}
 
-			ht2 {[sp]Дата выпуска: 02.07.23}
+			ht2 {[sp]Дата выпуска: 23.07.23}
 
 			[nl][nl]
 

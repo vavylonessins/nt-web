@@ -1,0 +1,75 @@
+doctype ntml 0.2
+
+import (favicon, "image/png") "../images/icon_logo.png"
+import (style, "text/css") "../styles/menu-bar.css"
+import (style, "text/css") "../styles/main.css"
+import (style, "text/css") "../styles/ui.css"
+
+title "NTWeb Docs - Hub"
+
+
+body (lang = "ru-ru") {
+	bl (class="root") {
+		bl (class="menu-bar"){
+			tab {
+				td (class="menu-logo") {
+					ln (href="../index.html"){
+						img (class="brand-logo", alt="NTWeb Logo", src="../images/logo.png")
+					}
+				}
+				td (class="menu-bar-separator") {ht1 {NT Web}}
+				td {ln (class="menu-button", href="downloads/index.html"){Скачать}}
+				td {ln (class="menu-button", href="docs/index.html"){Документация}}
+				td {ln (class="menu-button", href="ntwpi/index.html"){NTWPI}}
+				td {ln (class="menu-button", href="https://t.me/+ft6pYhYcqtk3NDdi"){Сообщество}}
+				td {ln (class="menu-button", href="blog/index.html"){Блог}}
+			}
+		}
+
+		bl (class="banner-root") {
+				[nl]
+			  	t { Здесь вы можете получить самую свежую и актуальную документацию по NTWeb. Но если вы используете старую
+			  		версию, это не беда! Просто выберите в разделе "Полная документация" подраздел с вашей версией. Если
+			  		вашей версии NTWeb нету в списке документации, то она уже не поддерживается, и в таком случае нужно }
+			  		будет искать в архиве документаций. он является подразделом раздела "Полная документация", но напоминаю,
+			  		что использование старых версий опасно непредвиденным повидением кода и проблемами с нахождением реешений
+			  		в интернете. Помните, 99,9[per] кода можно перенести со старой версии в новую безболезненно.
+			  		[nl][nl]
+			  		ln (href="special/index.html") {Дополнительная документация}
+			  	[nl][nl]
+			bl (class="row") {
+				bl (class="small-widget") {
+		            ht2 (class="widget-title") {
+		            	Давайте начнём
+		            }
+		            t {
+		            	Краткий путеводитель по возможностям NTWeb, здесь вы познакомитесь с платформой и решите, готовы ли ей
+		            	пользоваться. Текст написан для тех, кто никогда не сталкивался с NTWeb, для последней на данный момент
+		            	версии code #{ (0.2.18)}.
+		            }
+		            [nl]
+					t { ln (href="tutorials/get_started/p0.html") { Шпаргалка новичка } }
+		        }
+		        bl (class="small-widget") {
+		            ht2 (class="widget-title") {
+		            	Полная документация
+		            }
+					t {Документация для NTWeb всех поддерживаемых на данный момент версий}
+					[nl]
+					t { ln (href="full_list/index.html") {Перейти к документации} }
+		        }
+		        bl (class="small-widget") {
+		            ht2 (class="widget-title") {
+		            	Интеграции
+		            }
+					t {Документация описывает то, как можно подключить NTWeb к другим проектам.}
+					[nl]
+					t { ln (href="apis_list/index.html") {NTWeb code #{ 0.2.18}} }
+		        }
+		    }
+		}
+		bl (class="footer") {
+			Copyright[sp][c][sp]2021-2023
+		}
+	}
+}

@@ -1,0 +1,46 @@
+doctype ntml 0.2
+
+import (favicon, "image/png") "../../../images/icon_logo.png"
+import (style, "text/css") "../../../styles/menu-bar.css"
+import (style, "text/css") "../../../styles/main.css"
+import (style, "text/css") "../../../styles/ui.css"
+
+title "NTWeb 0.2.18"
+
+
+body {
+	bl (class="root") {
+		bl (class="menu-bar", style="margin-bottom: 32px;"){
+			tab {
+				td (class="menu-logo") {
+					ln (href="../../../index.html"){
+						img (class="brand-logo", alt="NTWeb Logo", src="../../../images/logo.png")
+					}
+				}
+				td (class="menu-bar-separator") {ht1 {NT Web}}
+				td {ln (class="menu-button", href="../../../downloads/index.html"){Скачать}}
+				td {ln (class="menu-button", href="../../../docs/index.html"){Документация}}
+				td {ln (class="menu-button", href="../../../ntwpi/index.html"){NTWPI}}
+				td {ln (class="menu-button", href="https://t.me/+ft6pYhYcqtk3NDdi"){Сообщество}}
+				td {ln (class="menu-button", href="../../../blog/index.html"){Блог}}
+			}
+		}
+		bl (class="banner-root") {
+			ht1 (style="margin-left: 0;") {Файлы: NTWeb 0.2.18[sp][sp][sp][sp]}
+			ht2 (style="margin-left: 10px;") {Дата выпуска: 23.07.23}
+
+			[nl]
+
+			bl (class="wide-row") {
+				bl (class="wide-widget") {
+					ht2 { Файлы }
+				}
+				ln (href="ntweb_0.2.18_src.tar.gz", download="true") {Исходный код} [nl]
+				ln (href="ntweb_0.2.18_all.deb", download="true") {code#{DEB-пакет}} [nl]
+			}
+		}
+		bl (class="footer") {
+			Copyright[sp][c][sp]2021-2023
+		}
+	}
+}

@@ -1,4 +1,5 @@
-/* #24FF7A */
+@import url('https://fonts.cdnfonts.com/css/fira-code-2');
+@import url('https://fonts.cdnfonts.com/css/fira-sans');
 
 .download-button {
   height: 64px;
@@ -22,7 +23,7 @@
   width: 52px;
   height: 52px;
   margin-left: 4px;
-  margin-top: -4px;
+  margin-top: -5px;
 }
 
 .releases-table {
@@ -39,16 +40,21 @@
   width: 33%;
 }
 
-/*
-.releases-table tr {
-  border: 1px solid #40404D;
-  border-left-width: 0;
-  border-top-width: 0;
-  width: 33%;
+.code-block {
+  border-radius: 8px;
+  border-width: 0;
+  background-color: #11111B;
+  color: #cde;
+  font-family: "Fira Code";
+  width: auto;
+  padding: 16px;
 }
 
-.releases-td {
-  width: 250px;
-  overflow: auto;
+.code-inline {
+  border-radius: 8px;
+  border-width: 0;
+  background-color: #11111B;
+  color: #cde;
+  font-family: "Fira Code";
+  padding: 4px 8px;
 }
-*/
